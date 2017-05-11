@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.exam.webapp.dao.exam.ExamDetailMapper" >
+    <resultMap id="BaseResultMap" type="com.he.exam.webapp.model.exam.ExamDetail" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="rule_level" property="ruleLevel" jdbcType="INTEGER" />
+        <result column="exam_id" property="examId" jdbcType="BIGINT" />
+        <result column="question_id" property="questionId" jdbcType="BIGINT" />
+        <result column="detail_index" property="detailIndex" jdbcType="INTEGER" />
+        <result column="record" property="record" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, rule_level, exam_id, question_id, detail_index, record, create_time
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.exam.webapp.model.exam.ExamDetailExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from exam_detail
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from exam_detail
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.he.exam.webapp.model.exam.ExamDetail" >
+        insert into exam_detail (id, rule_level, exam_id, 
+            question_id, detail_index, record, 
+            create_time)
+        values (#{id,jdbcType=BIGINT}, #{ruleLevel,jdbcType=INTEGER}, #{examId,jdbcType=BIGINT}, 
+            #{questionId,jdbcType=BIGINT}, #{detailIndex,jdbcType=INTEGER}, #{record,jdbcType=INTEGER}, 
+            #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.exam.webapp.model.exam.ExamDetailExample" resultType="java.lang.Integer" >
+        select count(*) from exam_detail
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update exam_detail
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.ruleLevel != null" >
+                rule_level = #{record.ruleLevel,jdbcType=INTEGER},
+            </if>
+            <if test="record.examId != null" >
+                exam_id = #{record.examId,jdbcType=BIGINT},
+            </if>
+            <if test="record.questionId != null" >
+                question_id = #{record.questionId,jdbcType=BIGINT},
+            </if>
+            <if test="record.detailIndex != null" >
+                detail_index = #{record.detailIndex,jdbcType=INTEGER},
+            </if>
+            <if test="record.record != null" >
+                record = #{record.record,jdbcType=INTEGER},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update exam_detail
+        set id = #{record.id,jdbcType=BIGINT},
+            rule_level = #{record.ruleLevel,jdbcType=INTEGER},
+            exam_id = #{record.examId,jdbcType=BIGINT},
+            question_id = #{record.questionId,jdbcType=BIGINT},
+            detail_index = #{record.detailIndex,jdbcType=INTEGER},
+            record = #{record.record,jdbcType=INTEGER},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.exam.webapp.model.exam.ExamDetail" >
+        update exam_detail
+        <set >
+            <if test="ruleLevel != null" >
+                rule_level = #{ruleLevel,jdbcType=INTEGER},
+            </if>
+            <if test="examId != null" >
+                exam_id = #{examId,jdbcType=BIGINT},
+            </if>
+            <if test="questionId != null" >
+                question_id = #{questionId,jdbcType=BIGINT},
+            </if>
+            <if test="detailIndex != null" >
+                detail_index = #{detailIndex,jdbcType=INTEGER},
+            </if>
+            <if test="record != null" >
+                record = #{record,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from exam_detail
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.exam.webapp.model.exam.ExamDetailExample" >
+        delete from exam_detail
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+</mapper>
