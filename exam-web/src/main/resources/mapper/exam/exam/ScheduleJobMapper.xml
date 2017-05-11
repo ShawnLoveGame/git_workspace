@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.exam.dao.exam.ScheduleJobMapper" >
+    <resultMap id="BaseResultMap" type="com.he.exam.model.exam.ScheduleJob" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+        <result column="job_status" property="jobStatus" jdbcType="INTEGER" />
+        <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+        <result column="job_desc" property="jobDesc" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="job_class" property="jobClass" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, job_name, job_group, job_status, cron_expression, job_desc, create_by, create_time, 
+        update_time, update_by, job_class
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.exam.model.exam.ScheduleJobExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from schedule_job
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from schedule_job
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.he.exam.model.exam.ScheduleJob" >
+        insert into schedule_job (id, job_name, job_group, 
+            job_status, cron_expression, job_desc, 
+            create_by, create_time, update_time, 
+            update_by, job_class)
+        values (#{id,jdbcType=BIGINT}, #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+            #{jobStatus,jdbcType=INTEGER}, #{cronExpression,jdbcType=VARCHAR}, #{jobDesc,jdbcType=VARCHAR}, 
+            #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+            #{updateBy,jdbcType=VARCHAR}, #{jobClass,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.exam.model.exam.ScheduleJobExample" resultType="java.lang.Integer" >
+        select count(*) from schedule_job
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update schedule_job
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.jobName != null" >
+                job_name = #{record.jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.jobGroup != null" >
+                job_group = #{record.jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="record.jobStatus != null" >
+                job_status = #{record.jobStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.cronExpression != null" >
+                cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="record.jobDesc != null" >
+                job_desc = #{record.jobDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createBy != null" >
+                create_by = #{record.createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null" >
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateBy != null" >
+                update_by = #{record.updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="record.jobClass != null" >
+                job_class = #{record.jobClass,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update schedule_job
+        set id = #{record.id,jdbcType=BIGINT},
+            job_name = #{record.jobName,jdbcType=VARCHAR},
+            job_group = #{record.jobGroup,jdbcType=VARCHAR},
+            job_status = #{record.jobStatus,jdbcType=INTEGER},
+            cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+            job_desc = #{record.jobDesc,jdbcType=VARCHAR},
+            create_by = #{record.createBy,jdbcType=VARCHAR},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            update_by = #{record.updateBy,jdbcType=VARCHAR},
+            job_class = #{record.jobClass,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.exam.model.exam.ScheduleJob" >
+        update schedule_job
+        <set >
+            <if test="jobName != null" >
+                job_name = #{jobName,jdbcType=VARCHAR},
+            </if>
+            <if test="jobGroup != null" >
+                job_group = #{jobGroup,jdbcType=VARCHAR},
+            </if>
+            <if test="jobStatus != null" >
+                job_status = #{jobStatus,jdbcType=INTEGER},
+            </if>
+            <if test="cronExpression != null" >
+                cron_expression = #{cronExpression,jdbcType=VARCHAR},
+            </if>
+            <if test="jobDesc != null" >
+                job_desc = #{jobDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="jobClass != null" >
+                job_class = #{jobClass,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from schedule_job
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.exam.model.exam.ScheduleJobExample" >
+        delete from schedule_job
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+</mapper>

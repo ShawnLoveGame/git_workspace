@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.exam.dao.exam.QuestionLibraryMapper" >
+    <resultMap id="BaseResultMap" type="com.he.exam.model.exam.QuestionLibrary" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="library_title" property="libraryTitle" jdbcType="VARCHAR" />
+        <result column="library_status" property="libraryStatus" jdbcType="INTEGER" />
+        <result column="library_img" property="libraryImg" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="is_deleted" property="isDeleted" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, library_title, library_status, library_img, create_time, update_time, is_deleted
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.exam.model.exam.QuestionLibraryExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from question_library
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="needCount != null and needCount == true ">
+            limit #{start} , #{rows}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from question_library
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="countFindLibraryWithPg" resultType="int" parameterType="com.he.exam.model.exam.dto.QuestionLibraryDTO">
+
+        select
+        count(*)
+        from question_library
+        where is_deleted = 0
+        <if test=" libraryTitle != null and libraryTitle != '' ">
+            and library_title like CONCAT("%" , #{libraryTitle} ,"%")
+        </if>
+        <if test=" libraryStatus != null and libraryStatus != '' ">
+            and library_status  = #{libraryStatus}
+        </if>
+
+    </select>
+
+    <select id="findLibraryWithPg" resultMap="BaseResultMap" parameterType="com.he.exam.model.exam.dto.QuestionLibraryDTO">
+        select
+        <include refid="Base_Column_List" />
+        from question_library
+        where is_deleted = 0
+        <if test=" libraryTitle != null and libraryTitle != '' ">
+            and library_title like CONCAT("%" , #{libraryTitle} ,"%")
+        </if>
+        <if test=" libraryStatus != null and libraryStatus != '' ">
+            and library_status  = #{libraryStatus}
+        </if>
+        limit #{start} , #{rows}
+    </select>
+
+    <insert id="insert" parameterType="com.he.exam.model.exam.QuestionLibrary" >
+        insert into question_library (id, library_title, library_status, 
+            library_img, create_time, update_time, 
+            is_deleted)
+        values (#{id,jdbcType=BIGINT}, #{libraryTitle,jdbcType=VARCHAR}, #{libraryStatus,jdbcType=INTEGER}, 
+            #{libraryImg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+            #{isDeleted,jdbcType=INTEGER})
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.exam.model.exam.QuestionLibraryExample" resultType="java.lang.Integer" >
+        select count(*) from question_library
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update question_library
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.libraryTitle != null" >
+                library_title = #{record.libraryTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.libraryStatus != null" >
+                library_status = #{record.libraryStatus,jdbcType=INTEGER},
+            </if>
+            <if test="record.libraryImg != null" >
+                library_img = #{record.libraryImg,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null" >
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null" >
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.isDeleted != null" >
+                is_deleted = #{record.isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update question_library
+        set id = #{record.id,jdbcType=BIGINT},
+            library_title = #{record.libraryTitle,jdbcType=VARCHAR},
+            library_status = #{record.libraryStatus,jdbcType=INTEGER},
+            library_img = #{record.libraryImg,jdbcType=VARCHAR},
+            create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            is_deleted = #{record.isDeleted,jdbcType=INTEGER}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.exam.model.exam.QuestionLibrary" >
+        update question_library
+        <set >
+            <if test="libraryTitle != null" >
+                library_title = #{libraryTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="libraryStatus != null" >
+                library_status = #{libraryStatus,jdbcType=INTEGER},
+            </if>
+            <if test="libraryImg != null" >
+                library_img = #{libraryImg,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isDeleted != null" >
+                is_deleted = #{isDeleted,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from question_library
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.exam.model.exam.QuestionLibraryExample" >
+        delete from question_library
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+</mapper>

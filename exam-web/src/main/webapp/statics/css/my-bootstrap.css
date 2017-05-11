@@ -1,0 +1,45 @@
+.select2-dropdown {
+    z-index: 10060 !important;/*1051;*/
+}
+/*.modal-open .daterangepicker {*/
+    /*z-index: 10155 !important;*/
+/*}*/
+/*.dropdown-menu{*/
+    /*z-index: 10111 !important;*/
+/*}*/
+
+/*.edui-default{*/
+    /*z-index: 10311 !important;*/
+/*}*/
+/*.edui-default .edui-shadow {*/
+    /*left: 0 !important;*/
+    /*top: 0 !important;*/
+    /*width: 100% !important;*/
+    /*height: 100% !important;*/
+/*}*/
+/*.edui-default .edui-state-hover {*/
+    /*position: relative !important;*/
+    /*background-color: #fff5d4;*/
+    /*border: 1px solid #dcac6c;*/
+    /*padding: 0;*/
+/*}*/
+/*.edui-popup-content.edui-default{*/
+    /*height: 200px !important;*/
+    /*overflow-y: scroll !important;*/
+/*}*/
+
+
+/*.webuploader-pick{*/
+    /*padding: 0 !important;*/
+    /*width: 82px !important;*/
+    /*height: 38px !important;*/
+    /*line-height: 38px !important;*/
+/*}*/
+/*.uploader-list .thumbnail {*/
+    /*position: relative;*/
+    /*display: inline;*/
+    /*float: left;*/
+    /*overflow: hidden;*/
+    /*font-size: 12px;*/
+    /*margin-left: 10px;*/
+/*}*/

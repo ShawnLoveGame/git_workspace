@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.exam.dao.log.BackOperateLogMapper" >
+    <resultMap id="BaseResultMap" type="com.he.exam.model.log.BackOperateLog" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="operation_type" property="operationType" jdbcType="VARCHAR" />
+        <result column="operation_name" property="operationName" jdbcType="VARCHAR" />
+        <result column="operate_id" property="operateId" jdbcType="BIGINT" />
+        <result column="operate_name" property="operateName" jdbcType="VARCHAR" />
+        <result column="input_parans" property="inputParans" jdbcType="LONGVARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, operation_type, operation_name, operate_id, operate_name, input_parans, create_time
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from back_operate_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.he.exam.model.log.BackOperateLog" >
+        insert into back_operate_log (id, operation_type, operation_name, 
+            operate_id, operate_name, input_parans, 
+            create_time)
+        values (#{id,jdbcType=BIGINT}, #{operationType,jdbcType=VARCHAR}, #{operationName,jdbcType=VARCHAR}, 
+            #{operateId,jdbcType=BIGINT}, #{operateName,jdbcType=VARCHAR}, #{inputParans,jdbcType=LONGVARCHAR}, 
+            #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.exam.model.log.BackOperateLog" >
+        update back_operate_log
+        <set >
+            <if test="operationType != null" >
+                operation_type = #{operationType,jdbcType=VARCHAR},
+            </if>
+            <if test="operationName != null" >
+                operation_name = #{operationName,jdbcType=VARCHAR},
+            </if>
+            <if test="operateId != null" >
+                operate_id = #{operateId,jdbcType=BIGINT},
+            </if>
+            <if test="operateName != null" >
+                operate_name = #{operateName,jdbcType=VARCHAR},
+            </if>
+            <if test="inputParans != null" >
+                input_parans = #{inputParans,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from back_operate_log
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+</mapper>

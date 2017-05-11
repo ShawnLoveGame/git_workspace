@@ -1,0 +1,287 @@
+html,th {
+    padding: 0
+}
+
+a,a:active {
+    color: inherit
+}
+
+.bar-tab,table {
+    border-collapse: collapse;
+    width: 100%
+}
+
+.bar-tab-item,.clamp-1 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.bar-tab-item,.clamp-1,.clamp-2 {
+    overflow: hidden
+}
+
+#title,.loca .crumbs,.loca strong,.topnav li {
+    float: left
+}
+
+html {
+    margin: 0;
+    font-family: "Microsoft Yahei",PingFangSC-Regular,Helvetica,"Droid Sans",Arial,sans-serif;
+    color: #333;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+body {
+    margin: 0 auto;
+    font: 12px "Microsoft Yahei","Lucida Grande",Verdana,Lucida,Helvetica,Arial,Simsun,sans-serif
+}
+
+input {
+    outline: 0;
+    border: 0
+}
+
+input[type=checkbox] {
+    -webkit-appearance: none!important
+}
+
+button,form,h1,h2,h3,h4,h5,input,ol,p,textarea,ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+th {
+    font-weight: 400
+}
+
+li {
+    list-style-type: none
+}
+
+em,i {
+    font-style: normal
+}
+
+a {
+    text-decoration: none
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.clearfix:after,.clearfix:before {
+    content: '';
+    display: table
+}
+
+.ps-rt {
+    position: relative
+}
+
+.ps-al {
+    position: absolute
+}
+
+.ps-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 100
+}
+
+.bar-tab {
+    position: fixed;
+    display: table;
+    table-layout: fixed;
+    z-index: 10;
+    left: 0;
+    bottom: 0;
+    height: 50px
+}
+
+.bar-tab-item {
+    display: table-cell;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle
+}
+
+#workIframeWrap,tr {
+    vertical-align: top
+}
+
+.clamp-1 {
+    display: inline-block;
+    width: 100%
+}
+
+.clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical
+}
+
+.block {
+    display: block!important
+}
+
+.mainId {
+    /*background: url(../images/sky/bg-header.png) repeat-x #0072bc*/
+}
+
+#title {
+    margin-top: 15px;
+    height: 70px;
+    width: 180px;
+    /*background: url(../../images/logo.png) 5px no-repeat*/
+}
+
+.topnav {
+    position: absolute;
+    height: 28px;
+    z-index: 1;
+    right: 5px;
+    top: 3px
+}
+
+.topnav ul {
+    height: 20px;
+    line-height: 20px;
+    color: #999
+}
+
+.topnav li {
+    color: #fff;
+    background: url(../images/sky/bg-icon.png) left -49px no-repeat
+}
+
+.topnav li.adminid {
+    background: url(../images/sky/bg-icon.png) -11px -10px no-repeat;
+    padding-left: 20px;
+    margin-right: 10px;
+    overflow: hidden
+}
+
+.topnav li a {
+    padding: 0 10px;
+    cursor: pointer
+}
+
+.topnav li a:hover {
+    text-decoration: underline
+}
+
+.main_nav {
+    /*padding-top: 20px*/
+}
+
+.main_nav ul {
+    height: 42px
+}
+
+.main_nav li {
+    float: left;
+    font-size: 14px;
+    font-weight: 700;
+    color: #e2f0f7;
+    border-radius: 5px 5px 0 0
+}
+
+.main_nav li:hover {
+    background-color: #3E72A3;
+    color: #e2f0f7;
+    text-shadow: 0 0 2px rgba(0,0,0,.7)
+}
+
+.main_nav li.active {
+    background-color: #e2f0f7;
+    color: #0072bc
+}
+
+.main_nav li.active:hover {
+    color: #0072bc;
+    text-shadow: 0 0 0 transparent
+}
+
+.main_nav li.active span {
+    cursor: default
+}
+
+.main_nav li span {
+    padding: 0 20px;
+    line-height: 42px;
+    cursor: pointer
+}
+
+.loca {
+    margin-left: 180px;
+    height: 28px;
+    line-height: 28px;
+    color: #888;
+    z-index: 2;
+    background-color: #e2f0f7
+}
+
+.loca strong {
+    margin-left: 28px;
+    font-weight: 400
+}
+
+.loca .crumbs,.loca .crumbs span {
+    margin-left: 5px
+}
+
+.loca .crumbs span.arrow {
+    background: url(../images/sky/bg-icon.png) -17px -93px no-repeat;
+    width: 6px;
+    height: 10px;
+    margin: 9px 0 0 6px
+}
+
+#frameTable,.main-menu {
+    height: 100%
+}
+
+.menutd {
+    width: 180px;
+    background-color: #e2f0f7
+}
+
+#workIframeWrap iframe {
+    height: 100%;
+    min-width: 1020px;
+    overflow-x: hidden
+}
+
+.main-menu {
+    /*padding-top: 16px;*/
+    width: 180px;
+    min-height: 500px;
+    position: relative;
+    z-index: 10
+}
+
+.main-menu ul {
+    padding-left: 10px
+}
+
+.main-menu ol li a {
+    display: block;
+    line-height: 32px;
+    padding: 3px 0 3px 30px;
+    color: #4c9cd0;
+    background: url(../images/sky/bg-icon.png) -4px -120px no-repeat
+}
+
+.main-menu ol li a.selected {
+    color: #0072bc;
+    background-color: #fff;
+    background-position: -4px -160px
+}

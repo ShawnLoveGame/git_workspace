@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.exam.dao.exam.ExamUserAnswerMapper" >
+    <resultMap id="BaseResultMap" type="com.he.exam.model.exam.ExamUserAnswer" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="exam_id" property="examId" jdbcType="BIGINT" />
+        <result column="answer_content" property="answerContent" jdbcType="LONGVARCHAR" />
+        <result column="user_record" property="userRecord" jdbcType="INTEGER" />
+        <result column="submit_time" property="submitTime" jdbcType="TIMESTAMP" />
+        <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, user_id, exam_id, answer_content, user_record, submit_time, department_id
+    </sql>
+
+    <select id="findUserExamAnswerListByTime"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from exam_user_answer
+        where submit_time <![CDATA[ >= ]]> date(#{startTime})
+        and submit_time <![CDATA[ < ]]> date(#{startTime})+1
+    </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.exam.model.exam.ExamUserAnswerExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from exam_user_answer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="needCount != null and needCount == true ">
+            limit #{start} , #{rows}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from exam_user_answer
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.he.exam.model.exam.ExamUserAnswer" >
+        insert into exam_user_answer (id, user_id, exam_id, 
+            answer_content, user_record, submit_time, 
+            department_id)
+        values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{examId,jdbcType=BIGINT}, 
+            #{answerContent,jdbcType=LONGVARCHAR}, #{userRecord,jdbcType=INTEGER}, #{submitTime,jdbcType=TIMESTAMP}, 
+            #{departmentId,jdbcType=BIGINT})
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.exam.model.exam.ExamUserAnswerExample" resultType="java.lang.Integer" >
+        select count(*) from exam_user_answer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update exam_user_answer
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userId != null" >
+                user_id = #{record.userId,jdbcType=BIGINT},
+            </if>
+            <if test="record.examId != null" >
+                exam_id = #{record.examId,jdbcType=BIGINT},
+            </if>
+            <if test="record.answerContent != null" >
+                answer_content = #{record.answerContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.userRecord != null" >
+                user_record = #{record.userRecord,jdbcType=INTEGER},
+            </if>
+            <if test="record.submitTime != null" >
+                submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.departmentId != null" >
+                department_id = #{record.departmentId,jdbcType=BIGINT},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update exam_user_answer
+        set id = #{record.id,jdbcType=BIGINT},
+            user_id = #{record.userId,jdbcType=BIGINT},
+            exam_id = #{record.examId,jdbcType=BIGINT},
+            answer_content = #{record.answerContent,jdbcType=LONGVARCHAR},
+            user_record = #{record.userRecord,jdbcType=INTEGER},
+            submit_time = #{record.submitTime,jdbcType=TIMESTAMP},
+            department_id = #{record.departmentId,jdbcType=BIGINT}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.exam.model.exam.ExamUserAnswer" >
+        update exam_user_answer
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="examId != null" >
+                exam_id = #{examId,jdbcType=BIGINT},
+            </if>
+            <if test="answerContent != null" >
+                answer_content = #{answerContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="userRecord != null" >
+                user_record = #{userRecord,jdbcType=INTEGER},
+            </if>
+            <if test="submitTime != null" >
+                submit_time = #{submitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="departmentId != null" >
+                department_id = #{departmentId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from exam_user_answer
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.exam.model.exam.ExamUserAnswerExample" >
+        delete from exam_user_answer
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+
+    <select id="countUserAnswer" resultType="int">
+        select count(DISTINCT user_id) from exam_user_answer
+    </select>
+
+    <select id="findUserDepartmentOrder"  resultType="com.he.exam.model.exam.Department">
+         SELECT department_id as id, COALESCE(SUM(user_record),0)  as totalScore
+        FROM `exam_user_answer`
+        GROUP BY department_id
+    </select>
+</mapper>
