@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.im.dao.OfUserMapper" >
+    <resultMap id="BaseResultMap" type="com.he.im.model.profire.OfUser" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="plainPassword" property="plainpassword" jdbcType="VARCHAR" />
+        <result column="encryptedPassword" property="encryptedpassword" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="creationDate" property="creationdate" jdbcType="CHAR" />
+        <result column="modificationDate" property="modificationdate" jdbcType="CHAR" />
+        <result column="op_time" property="opTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        id, username, plainPassword, encryptedPassword, name, email, creationDate, modificationDate, 
+        op_time
+    </sql>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.im.model.profire.OfUserExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from ofUser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select 
+        <include refid="Base_Column_List" />
+        from ofUser
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.he.im.model.profire.OfUser" >
+        insert into ofUser (id, username, plainPassword, 
+            encryptedPassword, name, email, 
+            creationDate, modificationDate, op_time
+            )
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{plainpassword,jdbcType=VARCHAR}, 
+            #{encryptedpassword,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+            #{creationdate,jdbcType=CHAR}, #{modificationdate,jdbcType=CHAR}, #{opTime,jdbcType=TIMESTAMP}
+            )
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.im.model.profire.OfUserExample" resultType="java.lang.Integer" >
+        select count(*) from ofUser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ofUser
+        <set >
+            <if test="record.id != null" >
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.username != null" >
+                username = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.plainpassword != null" >
+                plainPassword = #{record.plainpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.encryptedpassword != null" >
+                encryptedPassword = #{record.encryptedpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="record.name != null" >
+                name = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null" >
+                email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.creationdate != null" >
+                creationDate = #{record.creationdate,jdbcType=CHAR},
+            </if>
+            <if test="record.modificationdate != null" >
+                modificationDate = #{record.modificationdate,jdbcType=CHAR},
+            </if>
+            <if test="record.opTime != null" >
+                op_time = #{record.opTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update ofUser
+        set id = #{record.id,jdbcType=BIGINT},
+            username = #{record.username,jdbcType=VARCHAR},
+            plainPassword = #{record.plainpassword,jdbcType=VARCHAR},
+            encryptedPassword = #{record.encryptedpassword,jdbcType=VARCHAR},
+            name = #{record.name,jdbcType=VARCHAR},
+            email = #{record.email,jdbcType=VARCHAR},
+            creationDate = #{record.creationdate,jdbcType=CHAR},
+            modificationDate = #{record.modificationdate,jdbcType=CHAR},
+            op_time = #{record.opTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.im.model.profire.OfUser" >
+        update ofUser
+        <set >
+            <if test="username != null" >
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="plainpassword != null" >
+                plainPassword = #{plainpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="encryptedpassword != null" >
+                encryptedPassword = #{encryptedpassword,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="creationdate != null" >
+                creationDate = #{creationdate,jdbcType=CHAR},
+            </if>
+            <if test="modificationdate != null" >
+                modificationDate = #{modificationdate,jdbcType=CHAR},
+            </if>
+            <if test="opTime != null" >
+                op_time = #{opTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from ofUser
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.im.model.profire.OfUserExample" >
+        delete from ofUser
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+</mapper>

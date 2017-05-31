@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="         
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd         
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd         
+          http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd         
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd         
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+	default-autowire="byName">
+	
+	<bean id="dataSource_openfire" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc_openfire.url}" />
+		<property name="username" value="${jdbc_openfire.username}" />
+		<property name="password" value="${jdbc_openfire.password}" />
+		<property name="maxActive" value="${jdbc_openfire.maxActive}" />
+		<property name="initialSize" value="${jdbc_openfire.initialSize}" />
+		<property name="maxWait" value="${jdbc_openfire.maxWait}" />
+		<property name="minIdle" value="${jdbc_openfire.minIdle}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${jdbc_openfire.timeBetweenEvictionRunsMillis}" />
+		<property name="minEvictableIdleTimeMillis" value="${jdbc_openfire.minEvictableIdleTimeMillis}" />
+	</bean>
+	
+	<bean id="sqlSessionFactory_openfire" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource_openfire" />
+ 		<property name="mapperLocations" value="classpath*:mapper/openfire/*.xml" />
+	</bean>
+	 	
+    <bean id="mybatisConfigurer_openfire" class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory_openfire"/>  
+        <property name="basePackage" value="com.he.im.dao;" />
+    </bean>
+    
+</beans>  

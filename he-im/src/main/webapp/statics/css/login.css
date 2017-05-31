@@ -1,0 +1,104 @@
+.g-mn {
+    padding-top: 70px;
+    margin: 0 auto;
+    height: 100%;
+    background-color: #fdfdfd;
+    background: url(../images/bg-login.png) repeat-x;
+    background-position: center bottom;
+}
+.m-login {
+    position: relative;
+    width: 360px;
+    margin: auto;
+    padding-top: 64px;
+    color: #76838f;
+}
+.u-toptip {
+    position: fixed;
+    top: -54px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 25px;
+    height: 54px;
+    background: #fff9e2;
+    color: #c08722;
+    font-size: 14px;
+    line-height: 14px;
+    border-radius: 2px;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: top 0.35s;
+}
+
+.m-login .z-tip {
+    position: absolute;
+    top: 38px;
+    left: 2px;
+    display: inline-block;
+    padding-bottom: 15px;
+    color: #f16176;
+}
+.f-dn {
+    display: none !important;
+}
+.m-login .iptbox {
+    position: relative;
+}
+.auto-1493012850454 {
+    position: relative;
+    zoom: 1;
+}
+
+.m-login input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 18px;
+    height: 52px;
+    line-height: 20px;
+    border: 1px solid #e4eaec;
+    margin-bottom: 28px;
+    border-radius: 3px;
+    background-color: #fff;
+}
+input {
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+body, textarea, input, button, select, keygen, legend {
+    font: 12px/1.14 "Microsoft YaHei","微软雅黑","宋体",helvetica,"Hiragino Sans GB";
+    outline: 0;
+}
+.auto-1493012850454-show {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    cursor: text;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.m-login .u-icon-caps {
+    position: absolute;
+    right: 19px;
+    top: 13px;
+    width: 24px;
+    height: 28px;
+    background: url(../images/top.png);
+}
+.m-login .u-btn {
+    width: 100%;
+    height: 52px;
+    line-height: 52px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 3px;
+    background-color: #62a8ea;
+}
+.m-login .z-tip {
+    position: absolute;
+    top: 38px;
+    left: 2px;
+    display: inline-block;
+    padding-bottom: 15px;
+    color: #f16176;
+}

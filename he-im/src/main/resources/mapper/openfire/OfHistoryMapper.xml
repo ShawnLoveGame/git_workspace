@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.he.im.dao.OfHistoryMapper" >
+    <resultMap id="BaseResultMap" type="com.he.im.model.profire.OfHistory" >
+        <id column="username" property="username" jdbcType="VARCHAR" />
+        <id column="messageID" property="messageid" jdbcType="INTEGER" />
+        <result column="creationDate" property="creationdate" jdbcType="VARCHAR" />
+        <result column="messageSize" property="messagesize" jdbcType="INTEGER" />
+        <result column="stanza" property="stanza" jdbcType="LONGVARCHAR" />
+        <result column="toname" property="toname" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <sql id="Base_Column_List" >
+        username, messageID, creationDate, messageSize, stanza, toname
+    </sql>
+
+
+    <select id="selectCurrentMsgUser" parameterType="java.lang.String" resultType="java.lang.String">
+        select DISTINCT  toname from ofHistory
+        where username=#{username}
+        order by creationDate desc
+        limit 10
+    </select>
+
+    <select id="selectHistroyChatByUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select DISTINCT  toname from ofHistory where username=#{username}
+    </select>
+
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.he.im.model.profire.OfHistoryExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List" />
+        from ofHistory
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+        <if test="needCount != null and needCount == true ">
+            limit 200
+        </if>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.he.im.model.profire.OfHistoryKey" >
+        select 
+        <include refid="Base_Column_List" />
+        from ofHistory
+        where username = #{username,jdbcType=VARCHAR}
+          and messageID = #{messageid,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.he.im.model.profire.OfHistory" >
+        insert into ofHistory (username, messageID, creationDate, 
+            messageSize, stanza, toname
+            )
+        values (#{username,jdbcType=VARCHAR}, #{messageid,jdbcType=INTEGER}, #{creationdate,jdbcType=VARCHAR}, 
+            #{messagesize,jdbcType=INTEGER}, #{stanza,jdbcType=LONGVARCHAR}, #{toname,jdbcType=VARCHAR}
+            )
+    </insert>
+
+    <select id="countByExample" parameterType="com.he.im.model.profire.OfHistoryExample" resultType="java.lang.Integer" >
+        select count(*) from ofHistory
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update ofHistory
+        <set >
+            <if test="record.username != null" >
+                username = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messageid != null" >
+                messageID = #{record.messageid,jdbcType=INTEGER},
+            </if>
+            <if test="record.creationdate != null" >
+                creationDate = #{record.creationdate,jdbcType=VARCHAR},
+            </if>
+            <if test="record.messagesize != null" >
+                messageSize = #{record.messagesize,jdbcType=INTEGER},
+            </if>
+            <if test="record.stanza != null" >
+                stanza = #{record.stanza,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.toname != null" >
+                toname = #{record.toname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByExample" parameterType="map" >
+        update ofHistory
+        set username = #{record.username,jdbcType=VARCHAR},
+            messageID = #{record.messageid,jdbcType=INTEGER},
+            creationDate = #{record.creationdate,jdbcType=VARCHAR},
+            messageSize = #{record.messagesize,jdbcType=INTEGER},
+            stanza = #{record.stanza,jdbcType=LONGVARCHAR},
+            toname = #{record.toname,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.he.im.model.profire.OfHistory" >
+        update ofHistory
+        <set >
+            <if test="creationdate != null" >
+                creationDate = #{creationdate,jdbcType=VARCHAR},
+            </if>
+            <if test="messagesize != null" >
+                messageSize = #{messagesize,jdbcType=INTEGER},
+            </if>
+            <if test="stanza != null" >
+                stanza = #{stanza,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="toname != null" >
+                toname = #{toname,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where username = #{username,jdbcType=VARCHAR}
+          and messageID = #{messageid,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="com.he.im.model.profire.OfHistoryKey" >
+        delete from ofHistory
+        where username = #{username,jdbcType=VARCHAR}
+          and messageID = #{messageid,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByExample" parameterType="com.he.im.model.profire.OfHistoryExample" >
+        delete from ofHistory
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+
+</mapper>
