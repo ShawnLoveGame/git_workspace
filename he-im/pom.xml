@@ -5,7 +5,7 @@
 	<artifactId>soa-im</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>soa-im</name>
+	<name>he-im</name>
 	<url>http://maven.apache.org</url>
 
 
