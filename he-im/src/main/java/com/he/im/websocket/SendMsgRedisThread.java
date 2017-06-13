@@ -39,10 +39,12 @@ public class SendMsgRedisThread extends Thread{
                             while(meg != null ){
                                 meg = JsonUtils.fromJson(redisUtils.rpop(RedisConstant.USER_SEND_MSG_KEY_QUEUE.getPrefix()) , Map.class);
                                 if(meg != null ){
-                                    log.error("eg" + JsonUtils.toJson(meg));
                                     String fromJid = (String) meg.get("from");
                                     String toJid = (String) meg.get("to");
+
+                                    log.error("meg:" + meg );
                                     Map<String , Object> data = JsonUtils.fromJson(JsonUtils.toJson(meg.get("data")) , Map.class);
+                                    log.error("egdata:"+JsonUtils.fromJson(JsonUtils.toJson(meg.get("data")) , Map.class));
 
                                     MyWebSocketHandler.sendMsgToUser(fromJid , toJid , JsonUtils.toJson(data)  , 3);
                                 }

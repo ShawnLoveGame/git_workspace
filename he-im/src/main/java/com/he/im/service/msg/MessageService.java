@@ -1,5 +1,6 @@
 package com.he.im.service.msg;
 
+import com.he.im.common.RedisConstant;
 import com.he.im.conn.ImConnection;
 import com.he.im.dao.OfHistoryMapper;
 import com.he.im.model.ModelResult;
@@ -129,6 +130,9 @@ public class MessageService {
                 String stanza = history.getStanza();
                 Message message = JsonUtils.deserializeXML(stanza, Message.class);
                 Map<String,String> map = JsonUtils.fromJson(message.getBody() , Map.class);
+                if(map == null ){
+                    map = new HashMap<String,String>();
+                }
                 map.put("from" , history.getToname());
                 map.put("to" , history.getUsername());
                 detailList.add(map);
@@ -137,6 +141,17 @@ public class MessageService {
             result.addAttribute("username" , toname);
             result.addAttribute("unread" , 0);
             result.setSuccess(true);
+
+            //
+            String uname = from+"/"+toname;
+            redisUtils.set("C_USER_MSG_"+toname+"/"+from , 0);
+            try { //发消息的人
+                redisUtils.lpush(RedisConstant.MSG_USER_LIST_KEY_QUEUE.getPrefix(),  uname);
+                redisUtils.publish(RedisConstant.MSG_USER_LIST_KEY_QUEUE.getPrefix(),RedisConstant.MSG_USER_LIST_KEY_CHANNEL.getPrefix(), "user");
+            }catch (Exception e){
+                log.error("发布订阅失败" ,e );
+            }
+
         } catch (Exception e) {
             log.error("query error" , e);
             result.setSuccess(false);

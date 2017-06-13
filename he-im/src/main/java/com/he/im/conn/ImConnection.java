@@ -201,10 +201,11 @@ public class ImConnection {
                                 String uname = fromJid+"/"+toJid;
                                 redisUtils.rpush(uname, message.getBody());
 
-                                log.error("监听-toJid-"+toJid +"--- fromJid" + fromJid );
+//                                log.error("监听-toJid-"+toJid +"--- fromJid:" + fromJid );
 
                                 redisUtils.incr("C_USER_MSG_"+toJid+"/"+fromJid);
 
+//                                log.error("uname:"+message.getBody());
                                 //创建三个队列
                                 try { //发消息的人
                                     redisUtils.lpush(RedisConstant.MSG_USER_LIST_KEY_QUEUE.getPrefix(),  uname);
@@ -217,7 +218,7 @@ public class ImConnection {
                                     Map<String , Object> map = new HashMap<String,Object>();
                                     map.put("from" ,fromJid );
                                     map.put("to" , toJid);
-                                    map.put("data" , message.getBody());
+                                    map.put("data" , JsonUtils.fromJson(message.getBody() , Map.class));
                                     redisUtils.lpush(RedisConstant.USER_SEND_MSG_KEY_QUEUE.getPrefix(),  JsonUtils.toJson(map));
                                     redisUtils.publish(RedisConstant.USER_SEND_MSG_KEY_QUEUE.getPrefix(),RedisConstant.USER_SEND_MSG_KEY_CHANNEL.getPrefix(), "sendMsg");
                                 }catch (Exception e){

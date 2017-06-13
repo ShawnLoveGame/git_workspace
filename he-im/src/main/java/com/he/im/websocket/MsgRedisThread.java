@@ -1,9 +1,9 @@
 package com.he.im.websocket;
 
 import com.he.im.common.RedisConstant;
+import com.he.im.util.StringUtils;
 import com.he.im.util.shared.RedisUtils;
 import com.he.im.util.shared.pubsub.RedisPubSub;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;

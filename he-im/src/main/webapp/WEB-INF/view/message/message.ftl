@@ -201,15 +201,16 @@
         var uname = '${userInfo.userName}';
         uname = uname.split('@').join('+40').split(' ').join('-40');
         if ('WebSocket' in window) {
-            websocket = new WebSocket("ws://127.0.0.1:18092/ws?userName=" + uname);
+            websocket = new WebSocket("ws://${ws_domain}/ws?userName=" + uname);
         } else if ('MozWebSocket' in window) {
-            websocket = new MozWebSocket("ws://127.0.0.1:18092/ws" + uname);
+            websocket = new MozWebSocket("ws://${ws_domain}/ws" + uname);
         } else {
-            websocket = new SockJS("http://127.0.0.1:18092/ws/sockjs"+uname);
+            websocket = new SockJS("http://${ws_domain}/ws/sockjs"+uname);
         }
         websocket.onmessage = function(event) {
             var data=JSON.parse(event.data);
             //1 发消息的人
+            console.log(data);
             if(data.type == 1){
                 var objs = $("#buddy-list-wrap").find('.buddy-item');
                 var from  =data.fromName;
@@ -225,19 +226,21 @@
                 }
                 if(!c_flag){
                     var ops ='<div class="buddy-item" data-from="'+from+'" id="active_'+from+'">';
-                    ops +='<span class="bubble" id="chide_'+from+'">'+data.text+'</span>';
+                    if(data.text != null && data.text != 0){
+                        ops +='<span class="bubble" id="chide_'+from+'">'+data.text+'</span>';
+                    }
                     ops +='<div class="buddy-item-avatar-name" style="margin-left: 40px;">'+c_from+'</div>';
-                    ops +='<div class="sbtn-item-close"></div>';
+//                    ops +='<div class="sbtn-item-close"></div>';
                     ops +='</div>';
-
                     $('#buddy-list-wrap').append(ops);
+
                     var last = document.getElementById('buddy-list-wrap').lastChild;
                     var first = document.getElementById('buddy-list-wrap').childNodes[0];
                     document.getElementById('buddy-list-wrap').insertBefore(last, first);
+
+
                     //
                 }
-
-                console.log(current_from);
                 $('#buddy-list-wrap').find('.buddy-item').each(function(i , v){
                     var tf = $(this).attr('data-from');
                     if(tf == current_from){
@@ -259,7 +262,7 @@
 
             }else if(data.type == 3){
                 //消息解析
-                var th = data.text;
+                var th =  JSON.parse(data.text);
                 if(th != '' ){
                     //
                     var str = '<div class="chat-message-item seller">';
@@ -285,10 +288,16 @@
                     str += '<div class="timestamp">'+th.time+'</div>' ;
                     str += '</div>' ;
                     str += '</div>';
-                    if(str != ''){
-                        $('.swiper-slide').append(str);
-                        reChangeMessageBox();
+                    //判断有无选中 //判断有无当前用户
+                    var dobjs = $(".buddy-list-wrap").find('.active');
+                    if(dobjs.length > 0){
+                        var dj  = dobjs[0];
+                        var dfromname = $(dj).attr('data-from');
+                        if(dfromname == th.fromName && str != ''){
+                            $('.swiper-slide').append(str);
+                        }
                     }
+                    reChangeMessageBox();
                 }
             }
             //3 接收消息内容
@@ -308,7 +317,7 @@
                        ops +='<span class="bubble" id="chide_'+v.cname+'">'+v.unread+'</span>';
                    }
                    ops +='<div class="buddy-item-avatar-name" style="margin-left: 40px;">'+cname+'</div>';
-                   ops +='<div class="sbtn-item-close"></div>';
+//                   ops +='<div class="sbtn-item-close"></div>';
                    ops +='</div>';
                });
                $("#buddy-list-wrap").empty().append(ops);
