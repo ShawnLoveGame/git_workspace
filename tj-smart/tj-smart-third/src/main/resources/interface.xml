@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="gb2312"?>
-<interface>
-	<Intf>
-		<QCS_MemCacheControl
-			ClassName="com.linkage.ech.memcache.bean.MemCacheBean"
-			MethodName="MemCacheControl" />
-	</Intf>
-</interface>

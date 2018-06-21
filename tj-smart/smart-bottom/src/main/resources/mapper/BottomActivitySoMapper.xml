@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.user.mapper.BottomActivitySoMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          user_id     userId,
+          ncode     ncode,
+          amount     amount,
+          create_time     createTime,
+          serial_number     serialNumber,
+          status     status,
+          remark     remark,
+          sub_user_id subUserId
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomActivitySo">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_activity_so
+	    where id = #{id}
+	</select>
+
+    <select id="findByUserId" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomActivitySo">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_activity_so
+        where user_id = #{userId}
+    </select>
+
+
+    <select id="findByIv" resultType="com.ai.smart.bottom.user.model.BottomActivitySo">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_activity_so
+        where status = 1
+        order by create_time desc
+    </select>
+
+    <select id="findActiviySoPageByUserId" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomActivitySo">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_activity_so
+        where status = 1
+        and sub_user_id is not null
+        and user_id = #{userId}
+        order by create_time desc
+    </select>
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.user.model.BottomActivitySo" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_activity_so (
+          id,
+          user_id,
+          ncode,
+          amount,
+          create_time,
+          serial_number,
+          status,
+          remark,
+          sub_user_id
+      )
+    values (
+           #{id},
+           #{userId},
+           #{ncode},
+           #{amount},
+           #{createTime},
+           #{serialNumber},
+           #{status},
+          #{remark},
+          #{subUserId}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.user.model.BottomActivitySo">
+    update bottom_activity_so
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="userId != null">
+           user_id = #{userId},
+        </if>
+        <if test="ncode != null">
+           ncode = #{ncode},
+        </if>
+        <if test="amount != null">
+           amount = #{amount},
+        </if>
+        <if test="createTime != null">
+           create_time = #{createTime},
+        </if>
+        <if test="serialNumber != null">
+           serial_number = #{serialNumber},
+        </if>
+        <if test="status != null">
+           status = #{status},
+        </if>
+        <if test="remark != null">
+           remark = #{remark},
+        </if>
+        <if test="subUserId != null">
+            sub_user_id = #{subUserId},
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.user.model.BottomActivitySo">
+    update bottom_activity_so
+    set 
+           id = #{id},
+
+           user_id = #{userId},
+
+           ncode = #{ncode},
+
+           amount = #{amount},
+
+           create_time = #{createTime},
+
+           serial_number = #{serialNumber},
+
+           status = #{status},
+           sub_user_id = #{subUserId},
+
+         remark = #{remark}
+    where id = #{id}
+  </update>
+
+</mapper>   

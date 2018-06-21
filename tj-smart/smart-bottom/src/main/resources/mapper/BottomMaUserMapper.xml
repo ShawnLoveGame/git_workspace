@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.user.mapper.BottomMaUserMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          nick_name     nickName,
+          open_id     openId,
+          head_img     headImg,
+          create_time     createTime,
+          serial_num     serialNum,
+          gender     gender,
+          language     language,
+          city     city,
+          province     province,
+          country     country,
+          unionId     unionid,
+          bind_time   bindTime
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomMaUser">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_ma_user
+	    where id = #{id}
+	</select>
+
+    <select id="selectByOpenId" parameterType="java.lang.String" resultType="com.ai.smart.bottom.user.model.BottomMaUser">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_ma_user
+        where open_id = #{openId}
+    </select>
+
+    <select id="batchFindByIds" parameterType="java.util.List" resultType="com.ai.smart.bottom.user.model.BottomMaUser">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_ma_user
+
+        where 1=1
+        and id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+          #{item}
+         </foreach>
+    </select>
+
+    <select id="findBySeaialNum" parameterType="com.ai.smart.bottom.user.model.BottomMaUser" resultType="com.ai.smart.bottom.user.model.BottomMaUser">
+        select
+          <include refid="BaseColumn"/>
+        from bottom_ma_user
+        where serial_num = #{serialNum}
+    </select>
+
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.user.model.BottomMaUser" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_ma_user (
+          id,
+          nick_name,
+          open_id,
+          head_img,
+          create_time,
+          serial_num,
+          gender,
+          `language`,
+          city,
+          province,
+          country,
+          unionId,
+          bind_time
+      )
+    values (
+           #{id},
+           #{nickName},
+           #{openId},
+           #{headImg},
+           #{createTime},
+           #{serialNum},
+           #{gender},
+           #{language},
+           #{city},
+           #{province},
+           #{country},
+          #{unionid},
+          #{bindTime}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.user.model.BottomMaUser">
+    update bottom_ma_user
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="nickName != null">
+           nick_name = #{nickName},
+        </if>
+        <if test="openId != null">
+           open_id = #{openId},
+        </if>
+        <if test="headImg != null">
+           head_img = #{headImg},
+        </if>
+        <if test="createTime != null">
+           create_time = #{createTime},
+        </if>
+        <if test="serialNum != null">
+           serial_num = #{serialNum},
+        </if>
+        <if test="gender != null">
+           gender = #{gender},
+        </if>
+        <if test="language != null">
+           language = #{language},
+        </if>
+        <if test="city != null">
+           city = #{city},
+        </if>
+        <if test="province != null">
+           province = #{province},
+        </if>
+        <if test="country != null">
+           country = #{country},
+        </if>
+        <if test="unionid != null">
+           unionId = #{unionid},
+        </if>
+        <if test="bindTime != null">
+            bind_time = #{bindTime}
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.user.model.BottomMaUser">
+    update bottom_ma_user
+    set 
+           id = #{id},
+
+           nick_name = #{nickName},
+
+           open_id = #{openId},
+
+           head_img = #{headImg},
+
+           create_time = #{createTime},
+
+           serial_num = #{serialNum},
+
+           gender = #{gender},
+
+           language = #{language},
+
+           city = #{city},
+
+           province = #{province},
+
+           country = #{country},
+
+         unionId = #{unionid},
+         bind_time = #{bindTime}
+    where id = #{id}
+  </update>
+
+    <update id="clearSerialNum" parameterType="com.ai.smart.bottom.user.model.BottomMaUser">
+        update bottom_ma_user set serial_num = null  where id = #{id}
+    </update>
+
+</mapper>   

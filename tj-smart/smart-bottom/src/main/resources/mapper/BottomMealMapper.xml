@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.meal.mapper.BottomMealMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          parent_id     parentId,
+          ncode     ncode,
+          meal_name     mealName,
+          meal_title     mealTitle,
+          meal_price     mealPrice,
+          is_hav_sub     isHavSub,
+          off_type     offType,
+          create_time     createTime,
+          is_main     isMain,
+          status     status,
+          meal_content     mealContent,
+          meal_sort     mealSort
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.meal.model.BottomMeal">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_meal
+	    where id = #{id}
+	</select>
+
+    <select id="findMealByOnline" resultType="com.ai.smart.bottom.meal.model.BottomMeal">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_meal
+        where status=1
+        and parent_id = 0
+        order by meal_sort asc
+    </select>
+
+    <select id="findMealByNcode" parameterType="java.lang.String"  resultType="com.ai.smart.bottom.meal.model.BottomMeal">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_meal
+        where status=1
+        and ncode = #{ncode}
+    </select>
+
+    <select id="findSubMealByMealId" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.meal.model.BottomMeal">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_meal
+        where status=1
+        and parent_id = #{parentId}
+    </select>
+
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.meal.model.BottomMeal" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_meal (
+          id,
+          parent_id,
+          ncode,
+          meal_name,
+          meal_title,
+          meal_price,
+          is_hav_sub,
+          off_type,
+          create_time,
+          is_main,
+          status,
+          meal_content,
+          meal_sort
+      )
+    values (
+           #{id},
+           #{parentId},
+           #{ncode},
+           #{mealName},
+           #{mealTitle},
+           #{mealPrice},
+           #{isHavSub},
+           #{offType},
+           #{createTime},
+           #{isMain},
+           #{status},
+           #{mealContent},
+          #{mealSort}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.meal.model.BottomMeal">
+    update bottom_meal
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="parentId != null">
+           parent_id = #{parentId},
+        </if>
+        <if test="ncode != null">
+           ncode = #{ncode},
+        </if>
+        <if test="mealName != null">
+           meal_name = #{mealName},
+        </if>
+        <if test="mealTitle != null">
+           meal_title = #{mealTitle},
+        </if>
+        <if test="mealPrice != null">
+           meal_price = #{mealPrice},
+        </if>
+        <if test="isHavSub != null">
+           is_hav_sub = #{isHavSub},
+        </if>
+        <if test="offType != null">
+           off_type = #{offType},
+        </if>
+        <if test="createTime != null">
+           create_time = #{createTime},
+        </if>
+        <if test="isMain != null">
+           is_main = #{isMain},
+        </if>
+        <if test="status != null">
+           status = #{status},
+        </if>
+        <if test="mealContent != null">
+           meal_content = #{mealContent},
+        </if>
+        <if test="mealSort != null">
+           meal_sort = #{mealSort},
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.meal.model.BottomMeal">
+    update bottom_meal
+    set 
+           id = #{id},
+
+           parent_id = #{parentId},
+
+           ncode = #{ncode},
+
+           meal_name = #{mealName},
+
+           meal_title = #{mealTitle},
+
+           meal_price = #{mealPrice},
+
+           is_hav_sub = #{isHavSub},
+
+           off_type = #{offType},
+
+           create_time = #{createTime},
+
+           is_main = #{isMain},
+
+           status = #{status},
+
+           meal_content = #{mealContent},
+
+         meal_sort = #{mealSort}
+    where id = #{id}
+  </update>
+
+</mapper>   

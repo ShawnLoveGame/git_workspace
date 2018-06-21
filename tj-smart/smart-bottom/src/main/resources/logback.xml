@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <property name="context_name" value="smart"/>
+    <property name="LOG_HOME" value="/cqwt/smart-bottom/logs" />
+
+    <appender name="bottom_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>bottom.log</file>
+        <Prudent>true</Prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>bottom.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %file:[%line] - %msg%n</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="bottom_console_log" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] %file:[%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--<logger name="com.ai.smart.bottom" level="ERROR"></logger>-->
+    <!--<logger name="org.apache.ibatis" level="INFO"></logger>-->
+    <!--<logger name="org.springframework" level="INFO"></logger>-->
+    <!--<logger name="springfox" level="error"></logger>-->
+
+    <root level="INFO">
+         <appender-ref ref="bottom_console_log"/>
+         <appender-ref ref="bottom_log"/>
+    </root>
+
+
+</configuration>

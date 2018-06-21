@@ -1,0 +1,73 @@
+apply plugin: 'org.springframework.boot'
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
+repositories {
+    maven { url "http://112.124.118.149:18081/nexus/content/groups/public/" }
+    maven { url "http://112.124.118.149:18081/nexus/content/repositories/snapshots/" }
+}
+
+dependencies{
+    //compile project(':smart-common')
+    compile('com.ai.smart.common:smart-common:0.1.5-SNAPSHOT')
+
+    compile 'net.sf.json-lib:json-lib:2.2.3:jdk15'
+
+    compile group: 'org.jdom', name: 'jdom2', version: '2.0.6'
+
+    // mysql
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '3.1.0'
+    compile('mysql:mysql-connector-java:5.1.35')
+    compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.0')
+
+    // 分页
+    compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.3')
+
+//    compile group: 'org.mobicents.smsc', name: 'smpp', version: '7.2.104'104
+    compile group: 'ie.omk', name: 'smppapi', version: '0.3.7'
+
+    // 微信
+    compile 'com.github.binarywang:weixin-java-mp:3.0.0'
+    compile 'com.github.binarywang:weixin-java-pay:3.0.0'
+    compile 'com.github.binarywang:weixin-java-miniapp:3.0.0'
+
+    //test
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+}
+
+
+compileJava.dependsOn(processResources)
+//打包时间戳
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone("UTC"))
+}
+jar {
+    baseName = 'smart-bottom-'+releaseTime()
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'com.ai.smart.bottom.SmartBottomApplication'
+        )
+    }
+}
+
+buildscript {
+
+    ext {
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        maven { url "http://112.124.118.149:18081/nexus/content/groups/public/" }
+        maven { url "http://112.124.118.149:18081/nexus/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+

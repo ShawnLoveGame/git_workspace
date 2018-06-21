@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.user.mapper.BottomUserQrMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          user_id     userId,
+          user_qr_url     userQrUrl
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomUserQr">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_user_qr
+	    where id = #{id}
+	</select>
+
+    <select id="findByUserId" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomUserQr">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_user_qr
+        where user_id = #{userId}
+    </select>
+
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.user.model.BottomUserQr" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_user_qr (
+          id,
+          user_id,
+          user_qr_url
+      )
+    values (
+           #{id},
+           #{userId},
+          #{userQrUrl}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.user.model.BottomUserQr">
+    update bottom_user_qr
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="userId != null">
+           user_id = #{userId},
+        </if>
+        <if test="userQrUrl != null">
+           user_qr_url = #{userQrUrl},
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.user.model.BottomUserQr">
+    update bottom_user_qr
+    set 
+           id = #{id},
+
+           user_id = #{userId},
+
+         user_qr_url = #{userQrUrl}
+    where id = #{id}
+  </update>
+
+</mapper>   

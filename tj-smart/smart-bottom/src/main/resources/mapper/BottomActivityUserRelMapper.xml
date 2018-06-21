@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.user.mapper.BottomActivityUserRelMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          user_id     userId,
+          parent_user_id     parentUserId,
+          status     status,
+          bind_time     bindTime
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.user.model.BottomActivityUserRel">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_activity_user_rel
+	    where id = #{id}
+	</select>
+
+    <select id="findByUserIdAndParentId" parameterType="com.ai.smart.bottom.user.model.BottomActivityUserRel" resultType="com.ai.smart.bottom.user.model.BottomActivityUserRel">
+        select
+        <include refid="BaseColumn"/>
+        from bottom_activity_user_rel
+        where  1=1
+        <if test="parentUserId != null">
+            and parent_user_id = #{parentUserId}
+        </if>
+        <if test="userId != null">
+            and  user_id = #{userId}
+        </if>
+        order by bind_time desc
+
+    </select>
+
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.user.model.BottomActivityUserRel" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_activity_user_rel (
+          id,
+          user_id,
+          parent_user_id,
+          status,
+          bind_time
+      )
+    values (
+           #{id},
+           #{userId},
+           #{parentUserId},
+           #{status},
+          #{bindTime}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.user.model.BottomActivityUserRel">
+    update bottom_activity_user_rel
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="userId != null">
+           user_id = #{userId},
+        </if>
+        <if test="parentUserId != null">
+           parent_user_id = #{parentUserId},
+        </if>
+        <if test="status != null">
+           status = #{status},
+        </if>
+        <if test="bindTime != null">
+           bind_time = #{bindTime},
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.user.model.BottomActivityUserRel">
+    update bottom_activity_user_rel
+    set 
+           id = #{id},
+
+           user_id = #{userId},
+
+           parent_user_id = #{parentUserId},
+
+           status = #{status},
+
+         bind_time = #{bindTime}
+    where id = #{id}
+  </update>
+
+</mapper>   

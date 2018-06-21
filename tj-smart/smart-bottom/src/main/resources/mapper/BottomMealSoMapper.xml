@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ai.smart.bottom.meal.mapper.BottomMealSoMapper" > 
+
+	<sql id="BaseColumn">
+          id     id,
+          meal_id     mealId,
+          meal_name     mealName,
+          meal_title     mealTitle,
+          meal_price     mealPrice,
+          user_id     userId,
+          off_type     offType,
+          serial_num     serialNum,
+          create_time     createTime,
+          status     status,
+          ncode      ncode,
+          remark     remark
+    </sql>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultType="com.ai.smart.bottom.meal.model.BottomMealSo">
+	    select 
+	    <include refid="BaseColumn"/>
+	    from bottom_meal_so
+	    where id = #{id}
+	</select>
+
+
+  <insert id="insert" parameterType="com.ai.smart.bottom.meal.model.BottomMealSo" keyProperty="id" useGeneratedKeys="true">
+    insert into bottom_meal_so (
+          id,
+          meal_id,
+          meal_name,
+          meal_title,
+          meal_price,
+          user_id,
+          off_type,
+          serial_num,
+          create_time,
+          status,
+          ncode,
+          remark
+      )
+    values (
+           #{id},
+           #{mealId},
+           #{mealName},
+           #{mealTitle},
+           #{mealPrice},
+           #{userId},
+           #{offType},
+           #{serialNum},
+           #{createTime},
+          #{status},
+          #{ncode},
+          #{remark}
+      )
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.smart.bottom.meal.model.BottomMealSo">
+    update bottom_meal_so
+    <set>
+        <if test="id != null">
+           id = #{id},
+        </if>
+        <if test="mealId != null">
+           meal_id = #{mealId},
+        </if>
+        <if test="mealName != null">
+           meal_name = #{mealName},
+        </if>
+        <if test="mealTitle != null">
+           meal_title = #{mealTitle},
+        </if>
+        <if test="mealPrice != null">
+           meal_price = #{mealPrice},
+        </if>
+        <if test="userId != null">
+           user_id = #{userId},
+        </if>
+        <if test="offType != null">
+           off_type = #{offType},
+        </if>
+        <if test="serialNum != null">
+           serial_num = #{serialNum},
+        </if>
+        <if test="createTime != null">
+           create_time = #{createTime},
+        </if>
+        <if test="status != null">
+           status = #{status},
+        </if>
+        <if test="ncode != null">
+            ncode = #{ncode}
+        </if>
+        <if test="remark != null">
+            remark = #{remark}
+        </if>
+    </set>
+    where id = #{id}
+  </update>
+
+    <update id="updateStatusById" parameterType="java.lang.Long">
+        update bottom_meal_so
+        set status = 1
+        where id = #{id}
+    </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ai.smart.bottom.meal.model.BottomMealSo">
+    update bottom_meal_so
+    set 
+           id = #{id},
+           meal_id = #{mealId},
+           meal_name = #{mealName},
+           meal_title = #{mealTitle},
+           meal_price = #{mealPrice},
+           user_id = #{userId},
+           off_type = #{offType},
+           serial_num = #{serialNum},
+           create_time = #{createTime},
+         status = #{status},
+         ncode = #{ncode},
+         remark = #{remark}
+    where id = #{id}
+  </update>
+
+</mapper>   
