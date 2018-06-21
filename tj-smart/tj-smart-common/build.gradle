@@ -1,0 +1,86 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        maven { url "http://112.124.118.149:18081/nexus/content/groups/public/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+group='com.ai.smart.common'
+version = '0.1.5-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+
+repositories {
+    maven {
+        url "http://112.124.118.149:18081/nexus/content/groups/public/"
+        credentials {
+            username = 'admin'
+            password = 'admin123'
+        }
+    }
+}
+
+dependencies {
+    //lombok
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+    //dozer
+    compile group: 'net.sf.dozer', name: 'dozer', version: '5.2.2'
+    //springboot
+    compile('org.springframework.boot:spring-boot-starter:1.5.6.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-data-rest:1.5.6.RELEASE')
+    compile('org.springframework.boot:spring-boot-starter-freemarker:1.5.6.RELEASE')
+
+    // https://mvnrepository.com/artifact/org.jdom/jdom
+    compile group: 'org.jdom', name: 'jdom', version: '1.1.3'
+
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
+
+    // redis
+    compile('org.springframework.boot:spring-boot-starter-data-redis:1.5.6.RELEASE')
+    // jackson
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.4.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.4.4'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.4.4'
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.4.4'
+
+    //http
+    compile group: 'org.apache.httpcomponents', name: 'httpasyncclient', version: '4.1.3'
+    compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.4'
+    compile 'commons-collections:commons-collections:3.2'
+
+    compile 'org.bouncycastle:bcprov-jdk15on:1.55'
+
+    //swaggerui
+    compile('io.springfox:springfox-swagger-ui:2.6.1')
+    compile('io.springfox:springfox-swagger2:2.6.1')
+}
+
+
+compileJava.dependsOn(processResources)
+
+
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "http://112.124.118.149:18081/nexus/content/repositories/snapshots/") {
+            authentication(userName: "admin", password: "admin123")
+        }
+        pom.version = '0.1.5-SNAPSHOT'
+        pom.artifactId = 'smart-common'
+        pom.groupId = 'com.ai.smart.common'
+    }
+}
+
+

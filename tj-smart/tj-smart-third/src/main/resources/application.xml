@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="gb2312"?>
+<application>
+	<project name="wap" productmode="true" uploadpath="upload"
+			 version="NGCRM" province="CHOQ" logintype="WEB" contextname="wap"
+			 title="WADE - WAP" jmspath="tcp://10.191.22.248:4028"
+			 webservice_address="http://10.191.22.248:4028/uip_inws/services/UIPSOAP"
+			 webservice_address_fast="http://10.191.22.248:4028/uip_inws/services/UIPSOAP"
+			 webservice_address_middle="http://10.191.22.248:4029/uip_inws/services/UIPSOAP"
+			 webservice_address_slow="http://10.191.22.248:4029/uip_inws/services/UIPSOAP"
+
+			 trans_code_slow_list=""
+			 trans_code_middle_list="100203,100045"
+			 trans_code_fast_list="100054,100044,100020,100226,100580,100004,100041,100129,100183,100007,100009,100010,100012,100046,100006,100434"
+
+			 usp_chanName="E004" usp_username="WAPPROLE" domainName2="http://wap.cq.10086.cn/"
+			 Accesstype="bsacTYWap" />
+
+	<ech_MemCache mode="PRODUCT" />
+
+	<logcommit sleepTime="10" heartbeatTime="1" cookie="1"/>
+
+</application>
